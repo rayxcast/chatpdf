@@ -1,0 +1,32 @@
+# Python / dev artifacts
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+.venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+uv.lock.bak
+
+# Docker / build
+*.dockerignore
+docker-compose.override.yml
+.git
+.gitignore
+.DS_Store
+
+# Large / test-only data — keep this commented if you want sample PDFs in image
+# data/
+# data/*.pdf
+
+# Logs / temp
+*.log
+/tmp/
+
+services/
+tests/
+docs/
+*.md
+eval_results/
