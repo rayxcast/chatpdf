@@ -1,5 +1,5 @@
 """Real Redis semantic cache with vector similarity."""
-import numpy as np  # Add this import at top of cache.py
+import numpy as np
 from llama_index.core import Settings
 from app.config import app_settings, configure_llm_settings
 import redis.asyncio as redis
@@ -9,7 +9,6 @@ from typing import Optional, Tuple
 from redisvl.index import AsyncSearchIndex
 from redisvl.schema import IndexSchema
 from redisvl.query import VectorQuery
-# from redisvl.query.filter import Tag  # if you ever add metadata filters
 import uuid
 import re
 
@@ -78,8 +77,6 @@ async def get_semantic(
         
         index = await get_connected_index()
         results = await index.query(vector_query)
-        
-        # logger.info("Raw cache results", results=results)  # ← Keep temporarily for debug
         
         if results and len(results) > 0:
             top_result = results[0]  # dict

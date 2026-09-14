@@ -62,8 +62,6 @@ class LLMGenerator:
     async def generate(self, query: str, final_nodes: list) -> dict:
         try:
             if not final_nodes:
-                # logger.warning("No relevant nodes retrieved for query", query=query)
-                # fallback_response = llm.complete(f"Answer directly: {query}")
                 answer = "The answer is not present in the provided documents."
                 sources = []
             else:

@@ -1,7 +1,6 @@
 from contextlib import asynccontextmanager
 from pathlib import Path
 
-import redis.asyncio as redis
 from fastapi import FastAPI
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
@@ -14,14 +13,11 @@ from app.utils.logging import logging_middleware, setup_logging
 
 setup_logging()
 
-redis_client = redis.from_url(app_settings.REDIS_URL, decode_responses=True)  # if you need it here
-
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     MetadataStore().init_db()
     await init_cache_index()
     yield
-    # Optional: await redis_client.aclose()
 
 app = FastAPI(
     title=app_settings.APP_NAME,

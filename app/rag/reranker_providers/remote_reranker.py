@@ -25,7 +25,6 @@ class RemoteReranker(BaseReranker):
 
             results = response.json()["results"]
 
-            # print("> remote reranker results:", results)
             for node_index, score in results:
                 attach_rerank_score(nodes[node_index], score)
 

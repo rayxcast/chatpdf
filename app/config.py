@@ -6,7 +6,7 @@ from app.rag.embedding_providers.dense.factory import get_dense_provider
 
 class AppSettings(BaseSettings):
     # API
-    APP_NAME: str = "Hybrid RAG Template"
+    APP_NAME: str = "ChatPDF"
     LOG_LEVEL: str = "INFO"
     LOG_FORMAT: Literal["console", "json"] = "console"
 
@@ -54,7 +54,7 @@ class AppSettings(BaseSettings):
     # Services
     QDRANT_URL: str = "http://qdrant:6333"
     REDIS_URL: str = "redis://redis:6379/0"
-    RERANKER_URL: str = "http://reranker:8001"
+    RERANKER_URL: str = "http://reranker_service:8001"
     COLLECTION_NAME: str = "hybrid_rag_docs"
     
     # Keys (from .env)

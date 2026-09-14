@@ -55,6 +55,16 @@ Thumbs.db
 .pytest_cache/
 .coverage
 htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# Evaluation output
+# -------------------------
+# Evaluation runs may contain model output and are intentionally not committed.
+eval_results/*.json
+eval_results/*.jsonl
+eval_results/*.csv
+!eval_results/.gitkeep
 
 # -------------------------
 # Data (optional)

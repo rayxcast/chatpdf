@@ -8,7 +8,6 @@ import onnxruntime as ort
 
 def _get_execution_providers():
     available = ort.get_available_providers()
-    # print("ort.get_available_providers():", available)
     if "CUDAExecutionProvider" in available:
         return ["CUDAExecutionProvider", "CPUExecutionProvider"]
     return ["CPUExecutionProvider"]

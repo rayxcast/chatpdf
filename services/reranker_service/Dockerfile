@@ -37,7 +37,6 @@ ENV HF_HOME=/tmp/hf
 ENV TRANSFORMERS_CACHE=/tmp/hf
 ENV XDG_CACHE_HOME=/tmp/.cache
 
-# [Existing ENV variables...]
 ENV PATH="/app/.venv/bin:$PATH"
 
 # 1. Copy the virtual environment

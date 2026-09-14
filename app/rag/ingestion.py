@@ -86,7 +86,7 @@ def load_documents(input_path: str) -> list[Document]:
         documents.extend(cleaned_docs)
 
     if not documents:
-        supported = [".pdf", ".txt", ".md", ".docx", ".doc", ".html"]  # adjust to your loader
+        supported = [".pdf", ".txt", ".md"]
         raise ValueError(f"No supported documents found in '{input_path}'. Supported: {supported}")
 
     return documents

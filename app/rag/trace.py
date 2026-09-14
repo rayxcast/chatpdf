@@ -96,23 +96,6 @@ def summarize_nodes(nodes: list[Any], stage: str, limit: int | None = None) -> l
     ]
 
 
-def summarize_sources(nodes: list[Any]) -> list[dict]:
-    sources = []
-    for node_with_score in nodes:
-        metadata = _metadata(node_with_score)
-        source = {
-            key: _round_float(metadata[key])
-            for key in SOURCE_KEYS
-            if key in metadata and metadata[key] not in (None, "")
-        }
-        source.setdefault("chunk_id", _node_id(node_with_score))
-        score = getattr(node_with_score, "score", None)
-        if score is not None:
-            source["score"] = _round_float(score)
-        sources.append({key: value for key, value in source.items() if value is not None})
-    return sources
-
-
 def attach_rerank_score(node_with_score: Any, score: float) -> None:
     node = getattr(node_with_score, "node", None)
     metadata = getattr(node, "metadata", None)

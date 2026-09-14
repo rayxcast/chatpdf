@@ -4,10 +4,10 @@ from app.core.observability.timing import stage_timer
 from app.rag.generator import LLMGenerator
 from app.rag.reranker_providers.factory import get_reranker
 from app.rag.retriever import Retriever
+from app.config import app_settings
 from app.rag.trace import summarize_nodes
 from app.rag.vectorstores.factory import get_vector_store_provider
-from app.utils.cache import get_semantic, set_semantic 
-from app.config import app_settings
+from app.utils.cache import get_semantic, set_semantic
 import structlog
 import time
 
@@ -126,11 +126,6 @@ class HybridRAG:
                 warnings.append("Semantic cache was skipped because retrieval scope was selected.")
             cache_embedding = None
 
-            # if self.config.LLM_PROVIDER == "google" and use_cache:
-            #     warnings.append(
-            #         "Google free-tier request counts include semantic cache lookup, retrieval embedding, and LLM generation calls."
-            #     )
-
             if use_cache:
                 # 1️⃣ Check cached
                 external_calls["embedding_calls"]["cache_lookup"] = 1
@@ -196,7 +191,6 @@ class HybridRAG:
                     trace_id=trace_id,
                     count=len(reranked_nodes),
                     rerank_top_n=self.config.RERANK_TOP_N,
-                    # chunks=summarize_nodes(reranked_nodes, stage="reranked"),
                 )
 
             # 4️⃣ Generation
@@ -205,20 +199,7 @@ class HybridRAG:
                 external_calls["llm_calls"]["generation"] = 1 if final_nodes else 0
                 response = await self.generator.generate(query, final_nodes)
             
-            # 4️⃣ Generation Mock
-            # await asyncio.sleep(2)
-            # logger.info(
-            #     "stage_latency",
-            #     trace_id=trace_id,
-            #     stage="generation",
-            #     duration_seconds=2,
-            # )
-            # metrics["generation"] = 2
-            ##########################
-
             result = {
-                # "answer": "response[answer]",
-                # "sources": "response[sources]",
                 "answer": response["answer"],
                 "sources": response["sources"],
                 "mode": self.config.RETRIEVAL_MODE,
@@ -236,7 +217,6 @@ class HybridRAG:
             if use_cache:
                 # 5️⃣ Caching
                 with stage_timer("cache_response", logger, trace_id):
-                    # logger.info("Caching query and answer with Redis...")
                     external_calls["embedding_calls"]["cache_write"] = 0 if cache_embedding else 1
                     await set_semantic(query, {
                         "answer": result["answer"],
